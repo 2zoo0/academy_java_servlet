@@ -11,8 +11,8 @@
 <hr>
 <!-- ul>(li>a)*2 -->
 <ul>
-	<li><a href="./list">젠체 제품 목록</a></li>
-	<li><a href="./insert">제품 신규 등록</a></li>
+	<li><a href="list">젠체 제품 목록</a></li>
+	<li><a href="insert">제품 신규 등록</a></li>
 </ul>
 </body>
 </html>

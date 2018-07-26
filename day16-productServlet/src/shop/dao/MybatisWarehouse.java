@@ -21,105 +21,110 @@ public class MybatisWarehouse implements GeneralWarehouse {
 
 	@Override
 	public int add(Product product) throws DuplicateException {
-		// 삭제할 대상 제품이 있는지 선 조회
+		// 추가할 대상 제품이 있는지 선 조회
 		if (isExists(product)) {
 			throw new DuplicateException("추가", product);
 		}
-		// 1. Sqlsession 얻기
+		
+		// 1. SqlSession 얻기 : DML 작업은 auto-commit을 활성화
 		SqlSession session = factory.openSession(true);
 		int addCnt = 0;
 		
-		// 2. Mapper 인터페이스 객체를 session 에서 얻기
+		// 2. Mapper 인터페이스 객체를 session에서 얻기
 		ProductMapper mapper;
 		mapper = session.getMapper(ProductMapper.class);
 		
 		try {
-			// mapper 를 통하여 삭제 진행
+			// 3. mapper를 통하여 삭제 진행
 			addCnt = mapper.insert(product);
 		} finally {
-			if(session != null) {
+			if (session != null) {
 				session.close();
 			}
 		}
-		
+
 		return addCnt;
 	}
 
 	@Override
 	public Product get(Product product) throws NotFoundException {
-		// 삭제할 대상 제품이 있는지 선 조회
-		if (isExists(product)) {
+		// 조회할 대상 제품이 있는지 선 조회
+		if (!isExists(product)) {
 			throw new NotFoundException("조회", product);
 		}
-		// 1. Sqlsession 얻기
-		SqlSession session = factory.openSession(true);
+		
+		// 1. SqlSession 얻기 : DQL 작업은 
+		//                      non-auto-commit 으로 오픈해도 상관없음.
+		SqlSession session = factory.openSession(false);
 		Product found = null;
 		
-		// 2. Mapper 인터페이스 객체를 session 에서 얻기
+		// 2. Mapper 인터페이스 객체를 session에서 얻기
 		ProductMapper mapper;
 		mapper = session.getMapper(ProductMapper.class);
 		
 		try {
-			// mapper 를 통하여 삭제 진행
+			// 3. mapper를 통하여 삭제 진행
 			found = mapper.selectOne(product);
 		} finally {
-			if(session != null) {
+			if (session != null) {
 				session.close();
 			}
 		}
-		
+
 		return found;
 	}
 
 	@Override
 	public int set(Product product) throws NotFoundException {
-		// 삭제할 대상 제품이 있는지 선 조회
+		// 수정할 대상 제품이 있는지 선 조회
 		if (!isExists(product)) {
-			throw new NotFoundException("삭제", product);
+			throw new NotFoundException("수정", product);
 		}
-		// 1. Sqlsession 얻기
+		
+		// 1. SqlSession 얻기 : DML 작업은 auto-commit을 활성화
 		SqlSession session = factory.openSession(true);
 		int setCnt = 0;
 		
-		// 2. Mapper 인터페이스 객체를 session 에서 얻기
+		// 2. Mapper 인터페이스 객체를 session에서 얻기
 		ProductMapper mapper;
 		mapper = session.getMapper(ProductMapper.class);
 		
 		try {
-			// mapper 를 통하여 삭제 진행
+			// 3. mapper를 통하여 삭제 진행
 			setCnt = mapper.update(product);
 		} finally {
-			if(session != null) {
+			if (session != null) {
 				session.close();
 			}
 		}
-		
+
 		return setCnt;
 	}
 
 	@Override
 	public int remove(Product product) throws NotFoundException {
 		// 삭제할 대상 제품이 있는지 선 조회
-		if (!isExists(product)) {
+		if (product != null && !isExists(product)) {
 			throw new NotFoundException("삭제", product);
 		}
-		// 1. Sqlsession 얻기
+		
+		// 1. SqlSession 얻기 : DML 작업은 auto-commit을 활성화
 		SqlSession session = factory.openSession(true);
 		int rmCnt = 0;
 		
-		// 2. Mapper 인터페이스 객체를 session 에서 얻기
+		// 2. Mapper 인터페이스 객체를 session에서 얻기
 		ProductMapper mapper;
 		mapper = session.getMapper(ProductMapper.class);
 		
 		try {
-			// mapper 를 통하여 삭제 진행
-			rmCnt = mapper.deleteOne(product);
+			// 3. mapper를 통하여 삭제 진행
+			rmCnt = mapper.delete(product);
 		} finally {
-			if(session != null) {
+			if (session != null) {
 				session.close();
 			}
 		}
-		
+
 		return rmCnt;
 	}
 
@@ -169,7 +174,7 @@ public class MybatisWarehouse implements GeneralWarehouse {
 			if (session != null)
 				session.close();
 		}
-		System.out.println(isExists);
+		
 		return isExists;
 	}
 }
