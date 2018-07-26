@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="shop.vo.Product" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,12 +11,23 @@
 	table, tr, th, td {
 		border: 1px solid black;
 	}
+	table {
+		align-content: center;
+	}
+	
+	.element {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 </style>
 </head>
 <body>
-<h3>제품 상세 조회</h3>
-<hr>
-<table>
+
+<h3 align="center">제품 상세 조회</h3>
+<hr align="center">
+<div class="element" style="width: 300px; text-align: center;" >
+<table style="text-align: left">
 	<tr>
 		<th>제품 코드</th>
 		<td>
@@ -35,9 +47,7 @@
 	<tr>
 		<th>가격</th>
 		<td>
-			<input name="price" type="number" 
-			       readonly="readonly"
-				   value="${product.price}"/>
+			<fmt:formatNumber value="${product.price}" type="currency" currencySymbol="&#8361; "/>
 		</td>
 	</tr>
 	<tr>
@@ -56,5 +66,6 @@
 		</td>
 	</tr>
 </table>
+</div>
 </body>
 </html>

@@ -4,16 +4,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="refresh" content="2;url=${next}">
 <title>제품 정보 수정</title>
 <style type="text/css">
 	table, tr, th, td {
 		border: 1px solid black;
 	}
+	
+	.element {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 </style>
 </head>
 <body>
-<h3>제품 정보 수정</h3>
+<h3 align="center">제품 정보 수정</h3>
 <hr>
+<div class="element" style="width: 300px">
 <form action="update" method="post">
 <table>
 	<tr>
@@ -55,5 +63,6 @@
 	</tr>
 </table>
 </form>
+</div>
 </body>
 </html>

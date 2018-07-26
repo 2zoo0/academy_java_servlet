@@ -5,11 +5,23 @@
 <head>
 <meta charset="UTF-8">
 <title>제품 신규 등록</title>
+<style type="text/css">
+	table, tr, th, td {
+		border: 1px solid black;
+	}
+	
+	.element {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
 </head>
-<body>
 
-<h3>제품 신규 등록</h3>
+<body>
+<h3 align="center">제품 신규 등록</h3>
 <hr>
+<div class="element" style="width: 270px">
 <form action="insert" method="post">
 <table>
 	<tr>
@@ -37,7 +49,12 @@
 			<input type="reset" value="초기화">
 		</th>
 	</tr>
+	<tr>
+	<td colspan="2" style="text-align: center;"> <a href="./menu">시작메뉴</a>
+	</td>
+</tr>
 </table>
 </form>
+</div>
 </body>
 </html>

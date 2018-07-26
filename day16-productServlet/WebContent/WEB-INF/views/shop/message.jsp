@@ -13,6 +13,9 @@
 	이 페이지로 이동이 되었을 때는 request 객체에 message라는 이름의 속성이 설정된 상태
 	message 속성을 EL을 이용하여 출력만하는 페이지
  --%>
- ${message}
+ <div style="text-align: center;">
+ 
+ <h1><br><br>${message}</h1>
+ </div>
 </body>
 </html>
