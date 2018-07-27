@@ -1,0 +1,109 @@
+-----------------------------------------
+package : book.vo
+class : Book
+-----------------------------------------
+- bookId  : String  (책을 관리할 아이디 BK001 등)
+- title   : String  (책 제목)
+- author  : String  (저자명)
+- price   : int     (가격)
+- isbn    : String  (13자리 숫자 도서 ISBN)
+- publish : String  (출판사)
+-----------------------------------------
++ 생성자 기본 / 매개변수 받는 것
++ 수정자 / 접근자
++ equals(), hashCode() 기준 : bookId
++ toString()
+=========================================
+2개의 예외 클래스 작성, 적용 로직은 Product 동일함
+package : book.exception
+-----------------------------------------
+DuplicateException
+NotFoundException
+=========================================
+package : book.dao
+interface : BookShelf (책장개념)
+-----------------------------------------
++ insert(Book book) : int  : 1건 입력
++ update(Book book) : int  : 1건 수정
++ delete(Book book) : int  : 1건 삭제
++ select(Book book) : Book : 1건 조회
++ select() : List<Book> : 모든 책 정보 조회
+
+=== 추가 기능 구현 ===
++ select(int low, int high) : List<Book> 
+   : low ~ high 사이의 가격대 책을 검색 
+     검색 결과는 목록으로 리턴함
+     
++ select(String keyword) : List<Book>
+   : 책 title에 keyword 가 들어가는 책을 검색
+     검색 결과는 목록으로 리턴함 
+
++ totalCount() : int 
+   : 전체 등록된 책의 개수를 구하여 리턴 
+   
++ delete() : int
+   : 등록된 전체 책 정보를 삭제후 삭제된 건수를 리턴   
+-----------------------------------------
+위의 인터페이스를 List, Set, Map, Jdbc 로 구현하는
+4개의 구현 클래스 작성
+class : ListBookShelf, SetBookShelf
+        MapBookShelf, JdbcBookShelf
+=========================================
+JDBC 구현 전 생성할 테이블 SCOTT 계정에 생성
+table : book
+bookid      VARCHAR2(5) 
+title       VARCHAR2(200)   NOT NULL
+author      VARCHAR2(50)    NOT NULL
+price       NUMBER(10)
+isbn        VARCHAR2(13)
+publish     VARCHAR2(30)
+regdate     DATE    DEFAULT sysdate
+moddate     DATE
+
+PK : pk_book (bookid)
+=========================================
+package : book.view
+interface : BookView
+-----------------------------------------
++ display(Object object) : void
+-----------------------------------------
+인터페이스 구현 클래스
+class : MessageView, ErrorView, SingleView, ListView
+=========================================
+package : book.controller
+class : BookManager
++ insert(Book book) : void : 1건 입력
++ update(Book book) : void : 1건 수정
++ delete(Book book) : void : 1건 삭제
++ select(Book book) : void : 1건 조회
++ select() : void : 전체 목록 조회
+
+=== 추가 기능 구현 ===
++ select(int low, int high) : void
+    : low ~ high 사이 가격의 책 목록을 검색하여 출력
+    
++ select(String keyword) : void
+    : 책 title 에 keyword 가 들어있는 목록을 검색하여 출력
+    
++ totalCount() : void
+    : 책의 전체 건수를 조회하여 출력
+    
++ delete() : void
+    : 전체 책 정보를 삭제하고 삭제된 건수를 출력
+
+=========================================
+package : book.test
+class : BookStore
+main 이 있는 클래스. 실제로 실행
+=========================================
+
+추가 
+1. view factory, 혹은 book shelf factory
+   구현 가능하면 구현
+
+2. 싱글턴 적용 가능하면 JDBC 구현에만 적용
+
+3. Junit test 적용 가능하면 테스트하며 진행해볼 것
+
+4. 책 내용은 교보문고 등을 검색하여
+   있는 책으로 객체 생성할 것
